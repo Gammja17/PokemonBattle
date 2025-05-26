@@ -52,6 +52,8 @@ public class Main {
 	            	if(player.myPkm.spdCnt>0||player.myPkm.atkCnt>0) {
 	            		player.myPkm.spd -= player.myPkm.spdCnt*10;
 	            		player.myPkm.atk -= player.myPkm.atkCnt*10; 
+	            		player.myPkm.spdCnt = 0;
+	            		player.myPkm.atkCnt = 0;
 	            	}
 	            	
 	            	break;
@@ -79,6 +81,9 @@ public class Main {
     	            	if(player.myPkm.spdCnt>0||player.myPkm.atkCnt>0) {
     	            		player.myPkm.spd -= player.myPkm.spdCnt*10;
     	            		player.myPkm.atk -= player.myPkm.atkCnt*10; 
+    	            		player.myPkm.spdCnt = 0;
+    	            		player.myPkm.atkCnt = 0;
+    	            		
     	            	}
     	            	break;
     	            }
@@ -106,6 +111,8 @@ public class Main {
     	            	if(player.myPkm.spdCnt>0||player.myPkm.atkCnt>0) {
     	            		player.myPkm.spd -= player.myPkm.spdCnt*10;
     	            		player.myPkm.atk -= player.myPkm.atkCnt*10; 
+    	            		player.myPkm.spdCnt = 0;
+    	            		player.myPkm.atkCnt = 0;
     	            	}
     	            	break;
     	            }
