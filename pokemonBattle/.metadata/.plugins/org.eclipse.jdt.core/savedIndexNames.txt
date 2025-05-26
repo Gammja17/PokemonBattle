@@ -1,0 +1,1 @@
+INDEX VERSION 1.131+C:\Users\swu\Desktop\BattleProject\pokemonBattle\.metadata\.plugins\org.eclipse.jdt.core
