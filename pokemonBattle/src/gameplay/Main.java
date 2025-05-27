@@ -117,7 +117,7 @@ public class Main {
     	            	break;
     	            }
     	            else if(choice==2) {
-    	            	System.out.println(player.myPkm.name+"의 현재 체력은 "+player.myPkm.hp+"입니다.");
+    	            	System.out.printf(player.myPkm.name+"의 현재 체력은 %.2f 입니다.", player.myPkm.hp);
     	            }
                 }
             	break;
