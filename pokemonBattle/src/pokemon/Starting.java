@@ -36,6 +36,7 @@ public class Starting extends Pokemon {
                     this.atk += 2 * levelGap;
                     this.def += 2 * levelGap;
                     this.spd += 3 * levelGap;
+                    this.maxHp += 10 * levelGap;
 
                     System.out.println("레벨이 " + lv + "이(가) 되었습니다!");
                     System.out.println("현재 스탯:");

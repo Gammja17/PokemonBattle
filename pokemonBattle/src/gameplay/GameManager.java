@@ -7,6 +7,8 @@ import java.util.*;
 
 public class GameManager {
 	
+	public int healcnt = 0;
+	
 	Pokemon[] wildPool = new Pokemon[5];
 	
 	Skill 몸통박치기 = new Skill("몸통박치기", Type.노말, 30, 95);
@@ -175,6 +177,18 @@ public class GameManager {
 	    
 	    
 	    System.out.println(defender.name + "의 남은 체력: " + Math.max(0, (int) defender.hp));
+	}
+	
+	public void heal(Pokemon pkm) {
+		if(healcnt<=2) {
+			pkm.hp = pkm.maxHp;
+			System.out.println(pkm.name+"의 체력을 회복했습니다.(현재 hp:"+pkm.hp+")");
+			healcnt++;
+			System.out.println("남은 치료 가능 횟수:"+(3-healcnt)+"회");
+		}
+		else
+			System.out.println("남은 치료 가능 횟수가 없습니다.");
+		
 	}
 	
 	

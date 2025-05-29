@@ -7,7 +7,7 @@ public class Pokemon {
 	
 	public String name;
 	
-	public double hp, atk, def, spd;
+	public double hp, atk, def, spd, maxHp;
 	public int lv;
 	public Type type;
 	public Skill[] skill = new Skill[4];
@@ -24,6 +24,7 @@ public class Pokemon {
         this.type = type;
         this.skill = new Skill[4];
         this.lv = lv;
+        this.maxHp = hp;
 	}
 	
 	 public void setSkill(int index, Skill skill) {

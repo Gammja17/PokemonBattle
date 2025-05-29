@@ -40,7 +40,7 @@ public class Main {
             System.out.println("========= "+wave + "Wave"+" =========");
             while(true) {
 	       		 System.out.println("무슨 행동을 할까?");
-	       		 System.out.println("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인");
+	       		 System.out.println("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인 / 3. 포켓몬 치료(남은 횟수:"+(3-gm.healcnt)+"회)");
             	int choice = sc.nextInt();
 	            if(choice==1) {
 	            	int num = new Random().nextInt(5) + 1; // 1~5 중 랜덤 (보스 제외)
@@ -61,6 +61,9 @@ public class Main {
 	            else if(choice==2) {
 	            	System.out.println(player.myPkm.name+"의 현재 체력은 "+player.myPkm.hp+"입니다.");
 	            }
+	            else if(choice==3) {
+	            	gm.heal(player.myPkm);
+	            }
             }
             break;
             
@@ -70,7 +73,7 @@ public class Main {
             	System.out.println("날카로운 고양이 울음소리 같은 것이 들립니다...");
             	while(true) {
             		 System.out.println("무슨 행동을 할까?");
-            		 System.out.println("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인");
+            		 System.out.println("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인 / 3. 포켓몬 치료(남은 횟수:"+(3-gm.healcnt)+"회)");
                 	int choice = sc.nextInt();
     	            if(choice==1) {
     	            	Pokemon enemy = gm.createWild(6);
@@ -90,6 +93,9 @@ public class Main {
     	            else if(choice==2) {
     	            	System.out.println(player.myPkm.name+"의 현재 체력은 "+player.myPkm.hp+"입니다.");
     	            }
+    	            else if(choice==3) {
+    	            	gm.heal(player.myPkm);
+    	            }
                 }
             	break;
             	
@@ -100,7 +106,7 @@ public class Main {
             	System.out.println("공기가 스산합니다.");
             	while(true) {
            		 System.out.println("무슨 행동을 할까?");
-           		 System.out.println("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인");
+           		 System.out.println("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인 / 3. 포켓몬 치료(남은 횟수:"+(3-gm.healcnt)+"회)");
             		int choice = sc.nextInt();
     	            if(choice==1) {
     	            	Pokemon enemy = gm.createWild(7);
@@ -118,6 +124,9 @@ public class Main {
     	            }
     	            else if(choice==2) {
     	            	System.out.printf(player.myPkm.name+"의 현재 체력은 %.2f 입니다.", player.myPkm.hp);
+    	            }
+    	            else if(choice==3) {
+    	            	gm.heal(player.myPkm);
     	            }
                 }
             	break;
