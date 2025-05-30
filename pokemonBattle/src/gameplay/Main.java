@@ -8,30 +8,40 @@ import java.util.*;
 
 public class Main {
 	
+	public static Scanner sc = new Scanner(System.in);
+	public static GameManager gm = new GameManager();
+	public static Random rand = new Random();
+	public static Player player = new Player();
+	
 	 public static void waveCount() {
      	int wave = 1;
      	while(wave<11) {
      	System.out.println("");
          System.out.println("========= "+wave + "Wave"+" =========");
          while(true) {
-         	Pokemon enemy = new Pokemon("꼬렛", 70, 20, 20, 30, Type.노말, 2);
+         	Pokemon enemy;
 	       		 System.out.println("무슨 행동을 할까?");
 	       		 System.out.println("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인 / 3. 포켓몬 치료(남은 횟수:"+(3-gm.healcnt)+"회)");
          	int choice = sc.nextInt();
+         		System.out.println();
 	            if(choice==1) {
+	            
+	            	System.out.println("앞으로 나아갑니다.");
 	            	if(wave==5) {
 	            		enemy = gm.createWild(6); //페르시온 보스전
+	            		System.out.println("날카로운 고양이 울음소리 같은 것이 들립니다...");
 	            	}
 	            	else if(wave==10) {
 	            		enemy = gm.createWild(7); //레쿠쟈 보스전
+	            		System.out.println("여정의 끝이 보이는 것 같습니다...");
+	                	System.out.println("공기가 스산합니다.");
 	            	}
 	            	else {
 	            		int num = new Random().nextInt(5) + 1; // 1~5 중 랜덤 (보스 제외)
 	            		enemy = gm.createWild(num);
-	            	}
 	            	
-	            	System.out.println("앞으로 나아갑니다.");
 	            	System.out.println("야생의 " + enemy.name + "이(가) 나타났다!");
+	            	System.out.println();
 	            	
 	            	gm.battle(player.myPkm, enemy);
 	            	if(player.myPkm.spdCnt>0||player.myPkm.atkCnt>0) {
@@ -43,102 +53,37 @@ public class Main {
 	            	
 	            	break;
 	            }
+	            }   
+
+	            
 	            else if(choice==2) {
+	            	System.out.println("=====================================");
 	            	System.out.printf(player.myPkm.name+"의 현재 체력은 %.2f 입니다.\n", player.myPkm.hp);
+	            	System.out.println(player.myPkm.name+"의 현재 공격력은 " + player.myPkm.atk + "입니다.");
+	            	System.out.println(player.myPkm.name+"의 현재 방어력은 " + player.myPkm.def + "입니다.");
+	            	System.out.println(player.myPkm.name+"의 현재 스피드는 " + player.myPkm.spd + "입니다.");
+	            	System.out.println("=====================================");
+	            	System.out.println();
 	            }
 	            else if(choice==3) {
+	            	System.out.println("=====================================");
 	            	gm.heal(player.myPkm);
+	            	System.out.println("=====================================");
+	            	System.out.println();
 	            }
-<<<<<<< HEAD
+
             }
-            break;
-            
-            case 5:
-                System.out.println(" ");
-            	System.out.println("========= "+wave + "Wave"+" =========");
-            	System.out.println("날카로운 고양이 울음소리 같은 것이 들립니다...");
-            	while(true) {
-            		 System.out.println("무슨 행동을 할까?");
-            		 System.out.println("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인 / 3. 포켓몬 치료(남은 횟수:"+(3-gm.healcnt)+"회)");
-                	int choice = sc.nextInt();
-    	            if(choice==1) {
-    	            	Pokemon enemy = gm.createWild(6);
-    	            	System.out.println("앞으로 나아갑니다.");
-    	            	System.out.println("야생의 " + enemy.name + "이(가) 나타났다!");
-    	            	
-    	            	gm.battle(player.myPkm, enemy);
-    	            	if(player.myPkm.spdCnt>0||player.myPkm.atkCnt>0) {
-    	            		player.myPkm.spd -= player.myPkm.spdCnt*10;
-    	            		player.myPkm.atk -= player.myPkm.atkCnt*10; 
-    	            		player.myPkm.spdCnt = 0;
-    	            		player.myPkm.atkCnt = 0;
-    	            		
-    	            	}
-    	            	break;
-    	            }
-    	            else if(choice==2) {
-    	            	System.out.printf(player.myPkm.name+"의 현재 체력은 %.2f 입니다.\n", player.myPkm.hp);
-    	            }
-    	            else if(choice==3) {
-    	            	gm.heal(player.myPkm);
-    	            }
-                }
-            	break;
+         	wave++;
             	
-            case 10:
-                System.out.println(" ");
-            	System.out.println("========= "+wave + "Wave"+" =========");
-            	System.out.println("여정의 끝이 보이는 것 같습니다...");
-            	System.out.println("공기가 스산합니다.");
-            	while(true) {
-           		 System.out.println("무슨 행동을 할까?");
-           		 System.out.println("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인 / 3. 포켓몬 치료(남은 횟수:"+(3-gm.healcnt)+"회)");
-            		int choice = sc.nextInt();
-    	            if(choice==1) {
-    	            	Pokemon enemy = gm.createWild(7);
-    	            	System.out.println("앞으로 나아갑니다.");
-    	            	System.out.println("야생의 " + enemy.name + "이(가) 나타났다!");
-    	            	
-    	            	gm.battle(player.myPkm, enemy);
-    	            	if(player.myPkm.spdCnt>0||player.myPkm.atkCnt>0) {
-    	            		player.myPkm.spd -= player.myPkm.spdCnt*10;
-    	            		player.myPkm.atk -= player.myPkm.atkCnt*10; 
-    	            		player.myPkm.spdCnt = 0;
-    	            		player.myPkm.atkCnt = 0;
-    	            	}
-    	            	break;
-    	            }
-    	            else if(choice==2) {
-    	            	System.out.printf(player.myPkm.name+"의 현재 체력은 %.2f 입니다.\n", player.myPkm.hp);
-    	            }
-    	            else if(choice==3) {
-    	            	gm.heal(player.myPkm);
-    	            }
-                }
-            	break;
-            }
-        	wave++;
-        	
-        }  
-=======
-	            break;
-         }
-         wave++;
-     	}
-         
+        }
+
      }
-	
-	
-	public static Scanner sc = new Scanner(System.in);
-	public static GameManager gm = new GameManager();
-	public static Random rand = new Random();
-	public static Player player = new Player();
-	
+         
     public static void main(String[] args) {
         
         
-        System.out.println("게임을 시작합니다");
-        System.out.println("당신의 이름은 무엇인가요?: ");
+        System.out.println("포켓몬 배틀 start!!!");
+        System.out.print("당신의 이름은 무엇인가요?: ");
         
         player.name = sc.nextLine();
         
@@ -146,7 +91,7 @@ public class Main {
         System.out.println("???: "+player.name+"! 포켓몬의 세계에 잘 왔다. \n오박사: 나는 오박사. 포켓몬을 연구하고 있지.\n오박사: 너의 첫 포켓몬을 골라보렴...");
         System.out.println("오박사가 몬스터볼 세 개를 내밀었습니다.");
         System.out.println("몬스터볼 선택: 1.이상해씨 2.파이리 3.꼬부기");
-        
+        System.out.print("당신의 선택은 : ");
         int select = sc.nextInt();
         player.myPkm = gm.selectStarting(select);
         System.out.println("오박사: "+player.myPkm.name+"구나. 좋은 포켓몬이지!");
@@ -155,7 +100,7 @@ public class Main {
         
         waveCount();
         
->>>>>>> origin/main
+
         System.out.println("=======================");
         System.out.println("레쿠쟈: 키에에에에에엑!!!");
         System.out.println("레쿠쟈가 몸부림칩니다.\n갑자기, 레쿠쟈의 몸이 빛나기 시작했습니다.");
@@ -185,10 +130,7 @@ public class Main {
         System.out.println("=======================");
         System.out.println("");
     }
-    
-    
-       
-    
+
     
     
 

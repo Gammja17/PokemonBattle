@@ -3,9 +3,9 @@ package skill;
 import gameplay.Type;
 import pokemon.Pokemon;
 
-public class 특수기 extends Skill {
+public class SpecialSkill extends Skill {
 
-	public 특수기(String name, Type type, double power, int accuracy) {
+	public SpecialSkill(String name, Type type, double power, int accuracy) {
 		super(name, type, power, accuracy);   
 		this.name = name;
 	    this.type = type;

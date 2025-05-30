@@ -1,7 +1,9 @@
 package gameplay;
 
-import pokemon.*;
-import skill.*;
+import pokemon.Pokemon;
+import pokemon.Starting;
+import skill.Skill;
+import skill.SpecialSkill;
 
 import java.util.*;
 
@@ -22,17 +24,17 @@ public class GameManager {
 	Skill 마구할퀴기 = new Skill("마구할퀴기", Type.노말, 60, 100);
 	Skill 용성군 = new Skill("용성군", Type.노말, 130, 90);
 	
-	Skill 고속이동 = new 특수기("고속이동", Type.노말, 0, 100); 
-	Skill 칼춤 = new 특수기("칼춤", Type.노말, 0, 100);       
-	Skill 방어 = new 특수기("방어", Type.노말, 0, 100); 
+	Skill 고속이동 = new SpecialSkill("고속이동", Type.노말, 0, 100); 
+	Skill 칼춤 = new SpecialSkill("칼춤", Type.노말, 0, 100);       
+	Skill 방어 = new SpecialSkill("방어", Type.노말, 0, 100); 
 	
 	
 	
 	public Starting selectStarting(int select) {
-		Starting 디폴트 = new Starting("이상해씨", 110, 20, 40, 20, Type.풀,1);
+		Starting 디폴트 = new Starting("이상해씨", 160, 20, 40, 20, Type.풀,1);
 		switch(select) {
 		case 1 : //이상해씨
-			Starting 이상해씨 = new Starting("이상해씨", 110, 20, 40, 20, Type.풀,1);
+			Starting 이상해씨 = new Starting("이상해씨", 160, 20, 40, 20, Type.풀,1);
 			 이상해씨.setSkill(0, 몸통박치기);
 			 이상해씨.setSkill(1, 덩굴채찍);
 			 이상해씨.setSkill(2, 고속이동);
@@ -40,7 +42,7 @@ public class GameManager {
 			 이상해씨.learnSkill(0);
 			 return 이상해씨;
 		case 2 : //파이리
-			Starting 파이리 = new Starting("파이리", 90, 40, 20, 30, Type.불,1);
+			Starting 파이리 = new Starting("파이리", 140, 40, 20, 30, Type.불,1);
 			파이리.setSkill(0, 할퀴기);
 			파이리.setSkill(1, 불꽃세례);
 			파이리.setSkill(2, 칼춤);
@@ -48,7 +50,7 @@ public class GameManager {
 			파이리.learnSkill(0);
 			return 파이리;
 		case 3 : //꼬부기
-			Starting 꼬부기 = new Starting("꼬부기", 100, 30, 30, 25, Type.물,1);
+			Starting 꼬부기 = new Starting("꼬부기", 150, 30, 30, 25, Type.물,1);
 			꼬부기.setSkill(0, 몸통박치기);
 			꼬부기.setSkill(1, 물대포);
 			꼬부기.setSkill(2, 방어);
@@ -117,7 +119,7 @@ public class GameManager {
 	
 	public void gameOver(Pokemon my) {
 		System.out.println(my.name+"가 기절했습니다!");
-		System.out.println("게임 오버!");
+		System.out.println("배틀을 종료합니다.");
 		System.exit(0);  // 프로그램 종료
 	}
 
@@ -150,12 +152,18 @@ public class GameManager {
 
 	    if (attacker instanceof Starting) {
 	        System.out.println(attacker.name + "의 차례! 사용할 기술을 고르세요:");
-	        for (int i = 0; i < attacker.curSkill.length; i++) {
-	            if (attacker.curSkill[i] != null)
-	                System.out.println((i + 1) + ". " + attacker.curSkill[i].name);
-	        }
+	        showSkill(attacker, defender);
 	        int choice = sc.nextInt() - 1;
-	        selectedSkill = attacker.skill[choice];
+	        boolean haveSkill = true;
+	        haveSkill = checkHaveSkill(attacker, choice);
+	        while(!haveSkill)
+	        {
+	        	System.out.println("유효하지 않은 입력. 다시 고르세요.");
+	        	showSkill(attacker, defender);
+	        	choice = sc.nextInt() - 1;
+	        	haveSkill = checkHaveSkill(attacker, choice);
+	        }
+	        selectedSkill = attacker.curSkill[choice];
 	    } else {
 	    	List<Skill> availableSkills = new ArrayList<>();
 	    	for (Skill s : attacker.skill) {
@@ -180,6 +188,7 @@ public class GameManager {
 	    
 	    
 	    System.out.println(defender.name + "의 남은 체력: " + Math.max(0, (int) defender.hp));
+	    System.out.println();
 	}
 	
 	public void heal(Pokemon pkm) {
@@ -190,13 +199,35 @@ public class GameManager {
 			System.out.println("남은 치료 가능 횟수:"+(3-healcnt)+"회");
 		}
 		else
+		{
 			System.out.println("남은 치료 가능 횟수가 없습니다.");
+		}
 		
 	}
 	
+	private void showSkill(Pokemon attacker, Pokemon defender)
+	{
+		 for (int i = 0; i < attacker.curSkill.length; i++) {
+	            if (attacker.curSkill[i] != null)
+	                System.out.println((i + 1) + ". " + attacker.curSkill[i].name);
+	        }
+	}
+
+	private boolean checkHaveSkill(Pokemon attacker, int choice)
+	{
+		if(choice < 0 || choice >= attacker.curSkill.length)
+		{
+			return false;
+		}
+		
+		if(attacker.curSkill[choice] == null)
+		{
+			return false;
+		}
+		
+		return true;
+	}
 	
-
-
 
 	
 	
