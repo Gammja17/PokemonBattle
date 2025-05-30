@@ -8,43 +8,28 @@ import java.util.*;
 
 public class Main {
 	
-	
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Random rand = new Random();
-        GameManager gm = new GameManager();
-        
-        System.out.println("게임을 시작합니다");
-        System.out.println("당신의 이름은 무엇인가요?: ");
-        
-        Player player = new Player();
-        player.name = sc.nextLine();
-        
-        System.out.println("???: 신참 트레이너인가...");
-        System.out.println("???: "+player.name+"! 포켓몬의 세계에 잘 왔다. \n오박사: 나는 오박사. 포켓몬을 연구하고 있지.\n오박사: 너의 첫 포켓몬을 골라보렴...");
-        System.out.println("오박사가 몬스터볼 세 개를 내밀었습니다.");
-        System.out.println("몬스터볼 선택: 1.이상해씨 2.파이리 3.꼬부기");
-        
-        int select = sc.nextInt();
-        player.myPkm = gm.selectStarting(select);
-        System.out.println("오박사: "+player.myPkm.name+"구나. 좋은 포켓몬이지!");
-        System.out.println("오박사: 전설의 포켓몬 레쿠쟈가 폭주하고 있어... 네가 막아주었으면 좋겠구나.");
-        System.out.println("오박사: 앞으로의 여정이 찬란하기를!");
-        
-        int wave = 1;
-        
-        while(wave<=10) {
-        	switch(wave) {
-            case 1: case 2: case 3: case 4: case 6: case 7: case 8: case 9:
-            System.out.println("");
-            System.out.println("========= "+wave + "Wave"+" =========");
-            while(true) {
+	 public static void waveCount() {
+     	int wave = 1;
+     	while(wave<11) {
+     	System.out.println("");
+         System.out.println("========= "+wave + "Wave"+" =========");
+         while(true) {
+         	Pokemon enemy = new Pokemon("꼬렛", 70, 20, 20, 30, Type.노말, 2);
 	       		 System.out.println("무슨 행동을 할까?");
 	       		 System.out.println("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인 / 3. 포켓몬 치료(남은 횟수:"+(3-gm.healcnt)+"회)");
-            	int choice = sc.nextInt();
+         	int choice = sc.nextInt();
 	            if(choice==1) {
-	            	int num = new Random().nextInt(5) + 1; // 1~5 중 랜덤 (보스 제외)
-	            	Pokemon enemy = gm.createWild(num);
+	            	if(wave==5) {
+	            		enemy = gm.createWild(6); //페르시온 보스전
+	            	}
+	            	else if(wave==10) {
+	            		enemy = gm.createWild(7); //레쿠쟈 보스전
+	            	}
+	            	else {
+	            		int num = new Random().nextInt(5) + 1; // 1~5 중 랜덤 (보스 제외)
+	            		enemy = gm.createWild(num);
+	            	}
+	            	
 	            	System.out.println("앞으로 나아갑니다.");
 	            	System.out.println("야생의 " + enemy.name + "이(가) 나타났다!");
 	            	
@@ -64,6 +49,7 @@ public class Main {
 	            else if(choice==3) {
 	            	gm.heal(player.myPkm);
 	            }
+<<<<<<< HEAD
             }
             break;
             
@@ -134,6 +120,42 @@ public class Main {
         	wave++;
         	
         }  
+=======
+	            break;
+         }
+         wave++;
+     	}
+         
+     }
+	
+	
+	public static Scanner sc = new Scanner(System.in);
+	public static GameManager gm = new GameManager();
+	public static Random rand = new Random();
+	public static Player player = new Player();
+	
+    public static void main(String[] args) {
+        
+        
+        System.out.println("게임을 시작합니다");
+        System.out.println("당신의 이름은 무엇인가요?: ");
+        
+        player.name = sc.nextLine();
+        
+        System.out.println("???: 신참 트레이너인가...");
+        System.out.println("???: "+player.name+"! 포켓몬의 세계에 잘 왔다. \n오박사: 나는 오박사. 포켓몬을 연구하고 있지.\n오박사: 너의 첫 포켓몬을 골라보렴...");
+        System.out.println("오박사가 몬스터볼 세 개를 내밀었습니다.");
+        System.out.println("몬스터볼 선택: 1.이상해씨 2.파이리 3.꼬부기");
+        
+        int select = sc.nextInt();
+        player.myPkm = gm.selectStarting(select);
+        System.out.println("오박사: "+player.myPkm.name+"구나. 좋은 포켓몬이지!");
+        System.out.println("오박사: 전설의 포켓몬 레쿠쟈가 폭주하고 있어... 네가 막아주었으면 좋겠구나.");
+        System.out.println("오박사: 앞으로의 여정이 찬란하기를!");
+        
+        waveCount();
+        
+>>>>>>> origin/main
         System.out.println("=======================");
         System.out.println("레쿠쟈: 키에에에에에엑!!!");
         System.out.println("레쿠쟈가 몸부림칩니다.\n갑자기, 레쿠쟈의 몸이 빛나기 시작했습니다.");
@@ -163,6 +185,9 @@ public class Main {
         System.out.println("=======================");
         System.out.println("");
     }
+    
+    
+       
     
     
     
