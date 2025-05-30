@@ -3,6 +3,7 @@ package pokemon;
 import skill.*;
 import gameplay.*;
 
+
 public class Pokemon {
 	
 	public String name;

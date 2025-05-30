@@ -6,6 +6,7 @@ import skill.Skill;
 import skill.SpecialSkill;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class GameManager {
 	
@@ -110,7 +111,7 @@ public class GameManager {
             break;
 
         default:
-            System.out.println("잘못된 포켓몬 번호입니다.");
+            Main.logCallback.accept("잘못된 포켓몬 번호입니다.");
             break;
     }
 
@@ -118,8 +119,8 @@ public class GameManager {
 }
 	
 	public void gameOver(Pokemon my) {
-		System.out.println(my.name+"가 기절했습니다!");
-		System.out.println("배틀을 종료합니다.");
+		Main.logCallback.accept(my.name+"가 기절했습니다!");
+		Main.logCallback.accept("배틀을 종료합니다.");
 		System.exit(0);  // 프로그램 종료
 	}
 
@@ -140,7 +141,7 @@ public class GameManager {
 	    if (!my.checkAlive()) {
 	        gameOver(my);
 	    } else {
-	        System.out.println("전투에서 승리했습니다!");
+	        Main.logCallback.accept("전투에서 승리했습니다!");
 	    }
 	    if (my instanceof Starting && opp != null) {
             ((Starting) my).gainExp(opp.lv);  // gainExp 내부에서 자동으로 레벨업 + 기술습득 진행
@@ -151,14 +152,14 @@ public class GameManager {
 	    Skill selectedSkill;
 
 	    if (attacker instanceof Starting) {
-	        System.out.println(attacker.name + "의 차례! 사용할 기술을 고르세요:");
+	        Main.logCallback.accept(attacker.name + "의 차례! 사용할 기술을 고르세요:");
 	        showSkill(attacker, defender);
 	        int choice = sc.nextInt() - 1;
 	        boolean haveSkill = true;
 	        haveSkill = checkHaveSkill(attacker, choice);
 	        while(!haveSkill)
 	        {
-	        	System.out.println("유효하지 않은 입력. 다시 고르세요.");
+	        	Main.logCallback.accept("유효하지 않은 입력. 다시 고르세요.");
 	        	showSkill(attacker, defender);
 	        	choice = sc.nextInt() - 1;
 	        	haveSkill = checkHaveSkill(attacker, choice);
@@ -172,14 +173,14 @@ public class GameManager {
 
 
 	    	selectedSkill = availableSkills.get(new Random().nextInt(availableSkills.size()));
-	    	System.out.println(attacker.name + "은(는) " + selectedSkill.name + "을(를) 사용했다!");
+	    	Main.logCallback.accept(attacker.name + "은(는) " + selectedSkill.name + "을(를) 사용했다!");
 
 	    }
 
 	    // 명중률 체크
 	    int hit = new Random().nextInt(100) + 1;
 	    if (hit > selectedSkill.accuracy) {
-	        System.out.println(attacker.name + "의 공격이 빗나갔다!");
+	        Main.logCallback.accept(attacker.name + "의 공격이 빗나갔다!");
 	        return;
 	    }
 
@@ -187,20 +188,20 @@ public class GameManager {
 	    attacker.attack(selectedSkill, defender);
 	    
 	    
-	    System.out.println(defender.name + "의 남은 체력: " + Math.max(0, (int) defender.hp));
-	    System.out.println();
+	    Main.logCallback.accept(defender.name + "의 남은 체력: " + Math.max(0, (int) defender.hp));
+	    Main.logCallback.accept("");
 	}
 	
 	public void heal(Pokemon pkm) {
 		if(healcnt<=2) {
 			pkm.hp = pkm.maxHp;
-			System.out.println(pkm.name+"의 체력을 회복했습니다.(현재 hp:"+pkm.hp+")");
+			Main.logCallback.accept(pkm.name+"의 체력을 회복했습니다.(현재 hp:"+pkm.hp+")");
 			healcnt++;
-			System.out.println("남은 치료 가능 횟수:"+(3-healcnt)+"회");
+			Main.logCallback.accept("남은 치료 가능 횟수:"+(3-healcnt)+"회");
 		}
 		else
 		{
-			System.out.println("남은 치료 가능 횟수가 없습니다.");
+			Main.logCallback.accept("남은 치료 가능 횟수가 없습니다.");
 		}
 		
 	}
@@ -209,7 +210,7 @@ public class GameManager {
 	{
 		 for (int i = 0; i < attacker.curSkill.length; i++) {
 	            if (attacker.curSkill[i] != null)
-	                System.out.println((i + 1) + ". " + attacker.curSkill[i].name);
+	                Main.logCallback.accept((i + 1) + ". " + attacker.curSkill[i].name);
 	        }
 	}
 
@@ -227,8 +228,19 @@ public class GameManager {
 		
 		return true;
 	}
-	
 
+	public void setLogger(Consumer<String> logger) {
+	    Main.logCallback = logger;
+	}
 	
+	private int currentWave = 1;
+
+	public int getWave() {
+	    return currentWave;
+	}
+
+	public void nextWave() {
+	    currentWave++;
+	}
 	
 }

@@ -3,6 +3,7 @@ package skill;
 import gameplay.*;
 import pokemon.Pokemon;
 import java.util.Random;
+import java.util.function.Consumer;
 
 public class Skill {
 	public String name;
@@ -99,10 +100,10 @@ public class Skill {
 	  
 
 	    // 콘솔 출력
-	    System.out.println(myPoki.name + "의 " + skillName.name + "!");
-	    if (isCritical) System.out.println("급소에 맞았다!");
-	    if (isStrong) System.out.println("효과가 굉장하다!");
-	    else if (isWeak) System.out.println("효과가 별로다...");
+	    Main.logCallback.accept(myPoki.name + "의 " + skillName.name + "!");
+	    if (isCritical) Main.logCallback.accept("급소에 맞았다!");
+	    if (isStrong) Main.logCallback.accept("효과가 굉장하다!");
+	    else if (isWeak) Main.logCallback.accept("효과가 별로다...");
 	    
 	    if(target.isDefense) {
 	    	damage*=0.3;
@@ -111,7 +112,7 @@ public class Skill {
 	    
 	    target.hp -= damage;
 
-	    System.out.println(target.name + "에게 " + (int) damage + "의 데미지를 입혔다!");
+	    Main.logCallback.accept(target.name + "에게 " + (int) damage + "의 데미지를 입혔다!");
 	    
 	    
 	}

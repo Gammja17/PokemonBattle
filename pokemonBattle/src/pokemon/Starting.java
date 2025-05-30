@@ -1,11 +1,14 @@
 package pokemon;
 
-import gameplay.Type;
+import gameplay.*;
 import skill.Skill;
+import java.util.function.Consumer;
+
 
 public class Starting extends Pokemon {
 	
 	int exp;
+	public Runnable onLevelUpCallback;
 	
     public Starting(String name, double hp, double atk, double def, double spd, Type type, int lv) {
 		super(name, hp, atk, def, spd, type, 1);
@@ -19,7 +22,7 @@ public class Starting extends Pokemon {
     }
     
     public void gainExp(int gainedExp) {
-    	System.out.println(name + "이(가) " + gainedExp + "의 경험치를 얻었다!");
+    	Main.logCallback.accept(name + "이(가) " + gainedExp + "의 경험치를 얻었다!");
         this.exp += gainedExp;
         updateLevel();
     }
@@ -30,6 +33,7 @@ public class Starting extends Pokemon {
                 int newLevel = i + 1;
                 if (newLevel > lv) {
                     int levelGap = newLevel - lv;
+                    int oldLevel = lv;
                     lv = newLevel;
 
                     this.hp += 10 * levelGap;
@@ -38,25 +42,27 @@ public class Starting extends Pokemon {
                     this.spd += 3 * levelGap;
                     this.maxHp += 10 * levelGap;
 
-                    System.out.println("레벨이 " + lv + "이(가) 되었습니다!");
-                    System.out.println("현재 스탯:");
-                    System.out.println("HP  : " + (int)this.hp);
-                    System.out.println("ATK : " + (int)this.atk);
-                    System.out.println("DEF : " + (int)this.def);
-                    System.out.println("SPD : " + (int)this.spd);
+                    Main.logCallback.accept("레벨이 " + lv + "이(가) 되었습니다!");
+                    Main.logCallback.accept("현재 스탯:");
+                    Main.logCallback.accept("HP  : " + (int)this.hp);
+                    Main.logCallback.accept("ATK : " + (int)this.atk);
+                    Main.logCallback.accept("DEF : " + (int)this.def);
+                    Main.logCallback.accept("SPD : " + (int)this.spd);
                     
-                    switch (lv) {
-                    case 3:
-                    	this.learnSkill(1);
-                    	break;
-                    
-                    case 6:
-                    	this.learnSkill(2);
-                    	break;
-                    	
-                    case 9:
-                    	this.learnSkill(3);
-                    	break;
+                    if(oldLevel<3 && lv>= 3)
+                    {
+                    	learnSkill(1);
+                    }
+                    if(oldLevel<6 && lv>= 6)
+                    {
+                    	learnSkill(2);
+                    }
+                    if(oldLevel<9 && lv>= 9)
+                    {
+                    	learnSkill(3);
+                    }
+                    if (onLevelUpCallback != null) {
+                        onLevelUpCallback.run();
                     }
                 }
                 break;

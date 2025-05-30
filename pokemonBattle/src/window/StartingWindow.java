@@ -304,12 +304,16 @@ public class StartingWindow extends JFrame {
 		                } else {
 		                    secondTimer.stop();
 		                    startButton.setVisible(true);
+		                    new BattleWindow(gm, p).setVisible(true);
+		                    dispose();
 		                }
 		            }
 		        });
 		        secondTimer.start();
 			}
 		});
+		
+	
 
 	}
 }
