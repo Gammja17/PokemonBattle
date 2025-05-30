@@ -11,6 +11,7 @@ public class Pokemon {
 	public int lv;
 	public Type type;
 	public Skill[] skill = new Skill[4];
+	public Skill[] curSkill = new Skill[4];
 	public int spdCnt = 0;
 	public int atkCnt = 0;
 	public boolean isDefense = false;
@@ -23,6 +24,7 @@ public class Pokemon {
         this.spd = spd;
         this.type = type;
         this.skill = new Skill[4];
+        this.curSkill = new Skill[4];
         this.lv = lv;
         this.maxHp = hp;
 	}
