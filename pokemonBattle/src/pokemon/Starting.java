@@ -14,8 +14,8 @@ public class Starting extends Pokemon {
 
     private final int[] expTable = {0, 2, 5, 9, 14, 20, 27, 35, 44, 54};
 
-    public void learnSkill(Starting starting, int i, Skill skill) {
-    	this.skill[i] = skill;
+    public void learnSkill(int i) {
+    	this.curSkill[i] = this.skill[i];
     }
     
     public void gainExp(int gainedExp) {
@@ -36,6 +36,7 @@ public class Starting extends Pokemon {
                     this.atk += 2 * levelGap;
                     this.def += 2 * levelGap;
                     this.spd += 3 * levelGap;
+                    this.maxHp += 10 * levelGap;
 
                     System.out.println("레벨이 " + lv + "이(가) 되었습니다!");
                     System.out.println("현재 스탯:");
@@ -43,6 +44,20 @@ public class Starting extends Pokemon {
                     System.out.println("ATK : " + (int)this.atk);
                     System.out.println("DEF : " + (int)this.def);
                     System.out.println("SPD : " + (int)this.spd);
+                    
+                    switch (lv) {
+                    case 3:
+                    	this.learnSkill(1);
+                    	break;
+                    
+                    case 6:
+                    	this.learnSkill(2);
+                    	break;
+                    	
+                    case 9:
+                    	this.learnSkill(3);
+                    	break;
+                    }
                 }
                 break;
             }
