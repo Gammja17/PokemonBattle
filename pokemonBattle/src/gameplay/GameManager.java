@@ -37,6 +37,7 @@ public class GameManager {
 			 이상해씨.setSkill(1, 덩굴채찍);
 			 이상해씨.setSkill(2, 고속이동);
 			 이상해씨.setSkill(3, 솔라빔);
+			 이상해씨.learnSkill(0);
 			 return 이상해씨;
 		case 2 : //파이리
 			Starting 파이리 = new Starting("파이리", 90, 40, 20, 30, Type.불,1);
@@ -44,6 +45,7 @@ public class GameManager {
 			파이리.setSkill(1, 불꽃세례);
 			파이리.setSkill(2, 칼춤);
 			파이리.setSkill(3, 화염방사);
+			파이리.learnSkill(0);
 			return 파이리;
 		case 3 : //꼬부기
 			Starting 꼬부기 = new Starting("꼬부기", 100, 30, 30, 25, Type.물,1);
@@ -51,6 +53,7 @@ public class GameManager {
 			꼬부기.setSkill(1, 물대포);
 			꼬부기.setSkill(2, 방어);
 			꼬부기.setSkill(3, 하이드로펌프);
+			꼬부기.learnSkill(0);
 			return 꼬부기;
 		}
 		return 디폴트;
@@ -147,9 +150,9 @@ public class GameManager {
 
 	    if (attacker instanceof Starting) {
 	        System.out.println(attacker.name + "의 차례! 사용할 기술을 고르세요:");
-	        for (int i = 0; i < 4; i++) {
-	            if (attacker.skill[i] != null)
-	                System.out.println((i + 1) + ". " + attacker.skill[i].name);
+	        for (int i = 0; i < attacker.curSkill.length; i++) {
+	            if (attacker.curSkill[i] != null)
+	                System.out.println((i + 1) + ". " + attacker.curSkill[i].name);
 	        }
 	        int choice = sc.nextInt() - 1;
 	        selectedSkill = attacker.skill[choice];
