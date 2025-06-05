@@ -43,7 +43,7 @@ public class GameManager {
 			 이상해씨.learnSkill(0);
 			 return 이상해씨;
 		case 2 : //파이리
-			Starting 파이리 = new Starting("파이리", 140, 40, 20, 30, Type.불,1);
+			Starting 파이리 = new Starting("파이리", 300, 40, 20, 30, Type.불,1);
 			파이리.setSkill(0, 할퀴기);
 			파이리.setSkill(1, 불꽃세례);
 			파이리.setSkill(2, 칼춤);

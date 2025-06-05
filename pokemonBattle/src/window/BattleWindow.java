@@ -379,6 +379,11 @@ public class BattleWindow extends JFrame {
 	}
 	private void updateWaveLabel() {
 	    int wave = gm.getWave();
+	    
 	    waveLabel.setText("Wave: " + wave);
+	    
+	    if (wave == 11) {
+	    	new EndingWindow(p).setVisible(true);
+	    }
 	}
 }
