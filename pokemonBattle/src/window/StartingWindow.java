@@ -1,7 +1,5 @@
 package window;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,8 +12,7 @@ import javax.swing.*;
 
 public class StartingWindow extends JFrame {
 
-	private static GameManager gm = new GameManager();
-	private static Player p = new Player();
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField nameField;
@@ -46,7 +43,8 @@ public class StartingWindow extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	
+/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -256,6 +254,7 @@ public class StartingWindow extends JFrame {
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(220, 30, 340, 140);
+		storyArea.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		scrollPane.setVisible(false);
 		
 		scrollPane.setViewportView(storyArea);
