@@ -1,7 +1,5 @@
 package window;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 import java.util.List;
+import window.EndingWindow;
 
 public class BattleWindow extends JFrame {
 
@@ -87,6 +86,7 @@ public class BattleWindow extends JFrame {
 		battleLog = new JTextArea();
 		battleLog.setEditable(false);
 		battleLog.setLineWrap(true);
+		battleLog.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		scrollPane = new JScrollPane(battleLog);
 		scrollPane.setBounds(200, 100, 400, 300);
 		contentPane.add(scrollPane);
@@ -153,7 +153,7 @@ public class BattleWindow extends JFrame {
 		enemyHpBar.setForeground(Color.RED);
 		contentPane.add(enemyHpBar);
 		
-		waveLabel = new JLabel("Wave: 0");
+		waveLabel = new JLabel("Wave: 1");
 		waveLabel.setBounds(370, 30, 100, 20);
 		contentPane.add(waveLabel);
 		
@@ -174,6 +174,8 @@ public class BattleWindow extends JFrame {
 		gm.setLogger(msg -> battleLog.append(msg + "\n"));
 		DefaultCaret caret = (DefaultCaret) battleLog.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
+		updateWaveLabel();
 	}
 
 	private void updateEnemyHp(Pokemon opp) {
@@ -231,7 +233,8 @@ public class BattleWindow extends JFrame {
 	private void proceedToBattle() {
 		attackBtn.setEnabled(false);
 	    Pokemon enemy;
-	    int wave = gm.getWave();	    
+	    int wave = gm.getWave();	   
+	    
 	    if (wave == 5) {
 	        enemy = gm.createWild(6);
 	        Main.logCallback.accept("날카로운 고양이 울음소리 같은 것이 들립니다...");
@@ -285,7 +288,7 @@ public class BattleWindow extends JFrame {
 	    
 	    updateMyHp();
 	    updateEnemyHp(opp);
-	    updateWaveLabel();
+
 	    playerTurn = true;
 	    enableSkillButtons(true);
 	    healBtn.setEnabled(true);
@@ -320,7 +323,7 @@ public class BattleWindow extends JFrame {
 
 	    if (!available.isEmpty()) {
 	        Skill chosen = available.get(new Random().nextInt(available.size()));
-	        log(opp.name + "의 " + chosen.name + "!");
+	        /*log(opp.name + "의 " + chosen.name + "!");*/
 	        chosen.useSkill(chosen, myPkm, opp);
 	        updateMyHp();
 	    }
@@ -339,11 +342,12 @@ public class BattleWindow extends JFrame {
 	    if (!playerTurn || myPkm.curSkill[skillIndex] == null) return;
 
 	    Skill selected = myPkm.curSkill[skillIndex];
-	    log(myPkm.name + "의 " + selected.name + "!");
+	    // log(myPkm.name + "의 " + selected.name + "!");  // <== 여기 이 줄 제거!
+
 	    selected.useSkill(selected, opp, myPkm);
 
 	    updateEnemyHp(opp);
-	    
+
 	    if (!opp.checkAlive()) {
 	        log(opp.name + "을(를) 쓰러뜨렸다!");
 	        int expGained = opp.lv;
@@ -351,12 +355,21 @@ public class BattleWindow extends JFrame {
 	        log(myPkm.name + "은(는) 경험치 " + expGained + "를 얻었다!");
 	        updateSkillButtons();
 	        disableSkillButtons();
+	        
+	        if (gm.getWave() == 10) {
+	            // Wave 10의 보스 레쿠쟈를 쓰러뜨렸으면 즉시 엔딩씬 호출
+	            new EndingWindow(p).setVisible(true);
+	            dispose(); // 현재 BattleWindow 닫기
+	            return;
+	        }
+	        
 	        gm.nextWave();
 	        attackBtn.setEnabled(true);
-	        log("다음 웨이브를 시작하려면 '앞으로 나아가기' 버튼을 누르세요.");
+	        updateWaveLabel();
+	        
 	        return;
 	    }
-	    
+
 	    playerTurn = false;
 	    disableSkillButtons();
 
@@ -366,7 +379,8 @@ public class BattleWindow extends JFrame {
 	    });
 	    timer.setRepeats(false);
 	    timer.start();
-	}	
+	}
+	
 	private void updateSkillButtons() {
 	    for (int i = 0; i < 4; i++) {
 	        if (myPkm.curSkill[i] != null) {
@@ -379,11 +393,13 @@ public class BattleWindow extends JFrame {
 	}
 	private void updateWaveLabel() {
 	    int wave = gm.getWave();
+	    log("============ Wave " +wave + " ============");
+	    log("무슨 행동을 할까?");
+	    log("1. 앞으로 나아간다 / 2. 포켓몬 상태 확인 / 3. 포켓몬 치료(남은 횟수:" + (3 - gm.healcnt) + "회)");
+	    
 	    
 	    waveLabel.setText("Wave: " + wave);
 	    
-	    if (wave == 11) {
-	    	new EndingWindow(p).setVisible(true);
-	    }
+	   
 	}
 }
