@@ -51,14 +51,17 @@ public class Starting extends Pokemon {
                     
                     if(oldLevel<3 && lv>= 3)
                     {
+                    	Main.logCallback.accept(name + " 이(가) 3 레벨이 넘어 " + skill[1].name + " 을 배웠습니다!");
                     	learnSkill(1);
                     }
                     if(oldLevel<6 && lv>= 6)
                     {
+                    	Main.logCallback.accept(name + " 이(가) 6 레벨이 넘어 " + skill[2].name + " 을 배웠습니다!");
                     	learnSkill(2);
                     }
                     if(oldLevel<9 && lv>= 9)
                     {
+                    	Main.logCallback.accept(name + " 이(가) 9 레벨이 넘어 " + skill[3].name + " 을 배웠습니다!");
                     	learnSkill(3);
                     }
                     if (onLevelUpCallback != null) {

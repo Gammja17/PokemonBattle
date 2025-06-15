@@ -5,7 +5,7 @@ import pokemon.Pokemon;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class Skill {
+public class Skill implements Attackable{
 	public String name;
 	public Type type;
 	public double power;

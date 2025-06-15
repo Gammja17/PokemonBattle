@@ -32,10 +32,10 @@ public class GameManager {
 	
 	
 	public Starting selectStarting(int select) {
-		Starting 디폴트 = new Starting("이상해씨", 160, 20, 40, 20, Type.풀,1);
+		Starting 디폴트 = new Starting("이상해씨", 160, 20, 50, 20, Type.풀,1);
 		switch(select) {
 		case 1 : //이상해씨
-			Starting 이상해씨 = new Starting("이상해씨", 160, 20, 40, 20, Type.풀,1);
+			Starting 이상해씨 = new Starting("이상해씨", 160, 20, 50, 20, Type.풀,1);
 			 이상해씨.setSkill(0, 몸통박치기);
 			 이상해씨.setSkill(1, 덩굴채찍);
 			 이상해씨.setSkill(2, 고속이동);
@@ -43,7 +43,7 @@ public class GameManager {
 			 이상해씨.learnSkill(0);
 			 return 이상해씨;
 		case 2 : //파이리
-			Starting 파이리 = new Starting("파이리", 300, 40, 20, 30, Type.불,1);
+			Starting 파이리 = new Starting("파이리", 140, 40, 30, 30, Type.불,1);
 			파이리.setSkill(0, 할퀴기);
 			파이리.setSkill(1, 불꽃세례);
 			파이리.setSkill(2, 칼춤);
@@ -51,7 +51,7 @@ public class GameManager {
 			파이리.learnSkill(0);
 			return 파이리;
 		case 3 : //꼬부기
-			Starting 꼬부기 = new Starting("꼬부기", 150, 30, 30, 25, Type.물,1);
+			Starting 꼬부기 = new Starting("꼬부기", 150, 30, 40, 25, Type.물,1);
 			꼬부기.setSkill(0, 몸통박치기);
 			꼬부기.setSkill(1, 물대포);
 			꼬부기.setSkill(2, 방어);
